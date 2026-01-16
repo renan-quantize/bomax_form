@@ -3,224 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Seleção de Temas - {{NOME_EMPRESA}}</title>
+<title>Seleção de Temas - BOMAX</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { 
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-.container {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  max-width: 700px;
-  width: 100%;
-  padding: 40px;
-}
-.header {
-  text-align: center;
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid #f1f5f9;
-}
-.logo {
-  font-size: 48px;
-  margin-bottom: 10px;
-}
-h1 {
-  color: #1e293b;
-  font-size: 28px;
-  margin-bottom: 8px;
-}
-.subtitle {
-  color: #64748b;
-  font-size: 16px;
-}
-.info-box {
-  background: #f8fafc;
-  border-left: 4px solid #3b82f6;
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 24px;
-}
-.info-box strong {
-  color: #1e293b;
-  display: block;
-  margin-bottom: 8px;
-}
-.info-box ul {
-  list-style: none;
-  color: #475569;
-  font-size: 14px;
-  line-height: 1.8;
-}
-.info-box li:before {
-  content: "•";
-  color: #3b82f6;
-  font-weight: bold;
-  display: inline-block;
-  width: 1em;
-  margin-left: -1em;
-}
-.tema-card {
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 16px;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-.tema-card:hover {
-  border-color: #3b82f6;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
-}
-.tema-card.selected {
-  border-color: #3b82f6;
-  background: #eff6ff;
-}
-.tema-checkbox {
-  display: flex;
-  align-items: start;
-  gap: 12px;
-}
-.tema-checkbox input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  margin-top: 2px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-.tema-content {
-  flex: 1;
-}
-.tema-titulo {
-  font-weight: 600;
-  color: #1e293b;
-  font-size: 16px;
-  margin-bottom: 8px;
-  line-height: 1.4;
-}
-.tema-descricao {
-  color: #64748b;
-  font-size: 14px;
-  line-height: 1.6;
-  margin-bottom: 12px;
-}
-.keywords {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.keyword-tag {
-  background: #dbeafe;
-  color: #1e40af;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
-}
-.counter {
-  background: #3b82f6;
-  color: white;
-  padding: 16px;
-  border-radius: 8px;
-  text-align: center;
-  font-weight: 600;
-  font-size: 16px;
-  margin: 24px 0;
-  transition: background 0.3s ease;
-}
-.counter.success {
-  background: #10b981;
-}
-.counter.error {
-  background: #ef4444;
-}
-.btn-submit {
-  width: 100%;
-  background: #10b981;
-  color: white;
-  border: none;
-  padding: 16px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.btn-submit:hover:not(:disabled) {
-  background: #059669;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-}
-.btn-submit:disabled {
-  background: #94a3b8;
-  cursor: not-allowed;
-  transform: none;
-}
-.footer {
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid #e2e8f0;
-  text-align: center;
-  color: #94a3b8;
-  font-size: 13px;
-}
-.loading {
-  display: none;
-  text-align: center;
-  padding: 40px;
-}
-.spinner {
-  border: 4px solid #f3f4f6;
-  border-top: 4px solid #3b82f6;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 16px;
-}
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-.success-message, .error-message, .expired-message {
-  display: none;
-  text-align: center;
-  padding: 40px;
-}
-.success-icon, .error-icon, .expired-icon {
-  font-size: 64px;
-  margin-bottom: 16px;
-}
-@media (max-width: 640px) {
-  .container { padding: 24px; }
-  h1 { font-size: 24px; }
-  .tema-card { padding: 16px; }
-}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.container{background:white;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-width:700px;width:100%;padding:40px}
+.header{text-align:center;margin-bottom:30px;padding-bottom:20px;border-bottom:2px solid #f1f5f9}
+.logo{font-size:48px;margin-bottom:10px}
+h1{color:#1e293b;font-size:28px;margin-bottom:8px}
+.subtitle{color:#64748b;font-size:16px}
+.info-box{background:#f8fafc;border-left:4px solid #3b82f6;padding:16px;border-radius:8px;margin-bottom:24px}
+.info-box strong{color:#1e293b;display:block;margin-bottom:8px}
+.info-box ul{list-style:none;color:#475569;font-size:14px;line-height:1.8}
+.info-box li:before{content:"•";color:#3b82f6;font-weight:bold;display:inline-block;width:1em;margin-left:-1em}
+.tema-card{border:2px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:16px;transition:all .2s ease;cursor:pointer}
+.tema-card:hover{border-color:#3b82f6;box-shadow:0 4px 12px rgba(59,130,246,0.1)}
+.tema-card.selected{border-color:#3b82f6;background:#eff6ff}
+.tema-checkbox{display:flex;align-items:start;gap:12px}
+.tema-checkbox input[type="checkbox"]{width:20px;height:20px;margin-top:2px;cursor:pointer;flex-shrink:0}
+.tema-content{flex:1}
+.tema-titulo{font-weight:600;color:#1e293b;font-size:16px;margin-bottom:8px;line-height:1.4}
+.tema-descricao{color:#64748b;font-size:14px;line-height:1.6;margin-bottom:12px}
+.keywords{display:flex;flex-wrap:wrap;gap:6px}
+.keyword-tag{background:#dbeafe;color:#1e40af;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:500}
+.counter{background:#3b82f6;color:white;padding:16px;border-radius:8px;text-align:center;font-weight:600;font-size:16px;margin:24px 0;transition:background .3s ease}
+.counter.success{background:#10b981}
+.counter.error{background:#ef4444}
+.btn-submit{width:100%;background:#10b981;color:white;border:none;padding:16px;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s ease}
+.btn-submit:hover:not(:disabled){background:#059669;transform:translateY(-1px);box-shadow:0 4px 12px rgba(16,185,129,0.3)}
+.btn-submit:disabled{background:#94a3b8;cursor:not-allowed;transform:none}
+.footer{margin-top:24px;padding-top:20px;border-top:1px solid #e2e8f0;text-align:center;color:#94a3b8;font-size:13px}
+.loading{display:none;text-align:center;padding:40px}
+.spinner{border:4px solid #f3f4f6;border-top:4px solid #3b82f6;border-radius:50%;width:40px;height:40px;animation:spin 1s linear infinite;margin:0 auto 16px}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.success-message,.error-message{display:none;text-align:center;padding:40px}
+.success-icon,.error-icon{font-size:64px;margin-bottom:16px}
+@media (max-width:640px){.container{padding:24px}h1{font-size:24px}.tema-card{padding:16px}}
 </style>
 </head>
 <body>
 
 <div class="container">
-  <!-- ESTADO: CARREGANDO -->
   <div class="loading" id="loadingState">
     <div class="spinner"></div>
-    <p style="color: #64748b;">Carregando seus temas...</p>
+    <p style="color:#64748b">Carregando seus temas...</p>
   </div>
 
-  <!-- ESTADO: FORMULÁRIO -->
-  <div id="formState" style="display:none;">
+  <div id="formState" style="display:block">
     <div class="header">
       <div class="logo">📝</div>
       <h1>Selecione os Temas do Blog</h1>
-      <p class="subtitle"><span id="empresaNome"></span> • <span id="mesAno"></span></p>
+      <p class="subtitle">BOMAX • janeiro de 2026</p>
     </div>
 
     <div class="info-box">
@@ -228,12 +61,98 @@ h1 {
       <ul>
         <li>Selecione <strong>exatamente 4 temas</strong> que mais se alinham com sua estratégia</li>
         <li>Esses temas serão desenvolvidos nos próximos 2 meses</li>
-        <li>Você tem até <strong><span id="prazoData"></span></strong> para responder</li>
+        <li>Você tem até <strong>21/01/2026</strong> para responder</li>
       </ul>
     </div>
 
     <form id="formTemas">
-      <div id="temasContainer"></div>
+      <div id="temasContainer">
+        
+        <div class="tema-card" onclick="toggleCard(0)">
+          <div class="tema-checkbox">
+            <input type="checkbox" id="tema_0" name="temas_selecionados" value="1" 
+              onclick="event.stopPropagation()" onchange="updateCounter()">
+            <div class="tema-content">
+              <div class="tema-titulo">Bomba Pneumática vs Magnética: Qual é a Melhor Escolha para Aplicativos de Alta Pressão</div>
+              <div class="tema-descricao">Compare bombas pneumáticas e magnéticas para determinar qual atende melhor às necessidades de alta pressão em indústrias químicas e petroquímicas</div>
+              <div class="keywords">
+                <span class="keyword-tag">bomba pneumática</span><span class="keyword-tag">bomba magnética</span><span class="keyword-tag">alta pressão</span><span class="keyword-tag">indústria química</span><span class="keyword-tag">petroquímica</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tema-card" onclick="toggleCard(1)">
+          <div class="tema-checkbox">
+            <input type="checkbox" id="tema_1" name="temas_selecionados" value="2" 
+              onclick="event.stopPropagation()" onchange="updateCounter()">
+            <div class="tema-content">
+              <div class="tema-titulo">Como Reduzir 30% de Desgaste de Filtro Prensa com a Seleção Correta de Materiais</div>
+              <div class="tema-descricao">Reduza significativamente o desgaste de filtro prensa com a seleção correta de materiais, aumentando a eficiência e reduzindo custos</div>
+              <div class="keywords">
+                <span class="keyword-tag">filtro prensa</span><span class="keyword-tag">desgaste de filtro</span><span class="keyword-tag">materiais</span><span class="keyword-tag">eficiência</span><span class="keyword-tag">custos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tema-card" onclick="toggleCard(2)">
+          <div class="tema-checkbox">
+            <input type="checkbox" id="tema_2" name="temas_selecionados" value="3" 
+              onclick="event.stopPropagation()" onchange="updateCounter()">
+            <div class="tema-content">
+              <div class="tema-titulo">Tanque Plástico de Mistura: 5 Critérios Técnicos para Especificar Equipamento de Alta Qualidade</div>
+              <div class="tema-descricao">Identifique os critérios técnicos essenciais para especificar tanques plásticos de mistura de alta qualidade, garantindo a segurança e a eficiência</div>
+              <div class="keywords">
+                <span class="keyword-tag">tanque plástico de mistura</span><span class="keyword-tag">critérios técnicos</span><span class="keyword-tag">segurança</span><span class="keyword-tag">eficiência</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tema-card" onclick="toggleCard(3)">
+          <div class="tema-checkbox">
+            <input type="checkbox" id="tema_3" name="temas_selecionados" value="4" 
+              onclick="event.stopPropagation()" onchange="updateCounter()">
+            <div class="tema-content">
+              <div class="tema-titulo">Bomba Centrífuga Travando? 6 Sinais de Problemas e Correções Imediatas para Restaurar Produção</div>
+              <div class="tema-descricao">Identifique os sinais de problemas comuns em bombas centrífugas e aplique correções imediatas para restaurar a produção e evitar perdas</div>
+              <div class="keywords">
+                <span class="keyword-tag">bomba centrífuga</span><span class="keyword-tag">problemas</span><span class="keyword-tag">correções imediatas</span><span class="keyword-tag">produção</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tema-card" onclick="toggleCard(4)">
+          <div class="tema-checkbox">
+            <input type="checkbox" id="tema_4" name="temas_selecionados" value="5" 
+              onclick="event.stopPropagation()" onchange="updateCounter()">
+            <div class="tema-content">
+              <div class="tema-titulo">Filtro Prensa Industrial: Cálculo de Área Filtrante para Aplicativos de Alta Vazão</div>
+              <div class="tema-descricao">Calcule a área filtrante necessária para filtro prensa industrial em aplicativos de alta vazão, garantindo a eficiência e a segurança</div>
+              <div class="keywords">
+                <span class="keyword-tag">filtro prensa industrial</span><span class="keyword-tag">área filtrante</span><span class="keyword-tag">alta vazão</span><span class="keyword-tag">eficiência</span><span class="keyword-tag">segurança</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tema-card" onclick="toggleCard(5)">
+          <div class="tema-checkbox">
+            <input type="checkbox" id="tema_5" name="temas_selecionados" value="6" 
+              onclick="event.stopPropagation()" onchange="updateCounter()">
+            <div class="tema-content">
+              <div class="tema-titulo">Como a Bomba Magnética Reduz 25% de Desgaste de Meios de Transporte em Indústrias Químicas</div>
+              <div class="tema-descricao">Aprenda como a bomba magnética pode reduzir significativamente o desgaste de meios de transporte em indústrias químicas, aumentando a eficiência e reduzindo custos</div>
+              <div class="keywords">
+                <span class="keyword-tag">bomba magnética</span><span class="keyword-tag">desgaste de meios de transporte</span><span class="keyword-tag">indústria química</span><span class="keyword-tag">eficiência</span><span class="keyword-tag">custos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
 
       <div class="counter" id="contador">0 de 4 temas selecionados</div>
 
@@ -247,205 +166,107 @@ h1 {
     </div>
   </div>
 
-  <!-- ESTADO: SUCESSO -->
   <div class="success-message" id="successState">
     <div class="success-icon">✅</div>
-    <h2 style="color: #10b981; margin-bottom: 12px;">Temas Confirmados!</h2>
-    <p style="color: #64748b;">Seus temas foram registrados com sucesso. Em breve começaremos a produção do conteúdo.</p>
+    <h2 style="color:#10b981;margin-bottom:12px">Temas Confirmados!</h2>
+    <p style="color:#64748b">Seus temas foram registrados com sucesso. Em breve começaremos a produção do conteúdo.</p>
   </div>
 
-  <!-- ESTADO: ERRO -->
   <div class="error-message" id="errorState">
     <div class="error-icon">❌</div>
-    <h2 style="color: #ef4444; margin-bottom: 12px;">Erro ao Enviar</h2>
-    <p style="color: #64748b;" id="errorMessage">Ocorreu um erro ao processar sua resposta. Por favor, tente novamente.</p>
-  </div>
-
-  <!-- ESTADO: EXPIRADO -->
-  <div class="expired-message" id="expiredState">
-    <div class="expired-icon">⏰</div>
-    <h2 style="color: #f59e0b; margin-bottom: 12px;">Prazo Expirado</h2>
-    <p style="color: #64748b;">O prazo para seleção de temas expirou. Entre em contato com nossa equipe.</p>
+    <h2 style="color:#ef4444;margin-bottom:12px">Erro ao Enviar</h2>
+    <p style="color:#64748b" id="errorMessage">Ocorreu um erro. Tente novamente.</p>
   </div>
 </div>
 
 <script>
-// Configuração - será substituída dinamicamente pelo n8n
-const CONFIG = {
-  approvalId: '{{APPROVAL_ID}}',
-  projectId: '{{PROJECT_ID}}',
-  nomeEmpresa: '{{NOME_EMPRESA}}',
-  mesAno: '{{MES_ANO}}',
-  prazo: '{{PRAZO_FORMATADO}}',
-  webhookUrl: '{{WEBHOOK_URL}}',
-  temas: {{TEMAS_JSON}}
+const CONFIG={
+  approvalId:'4917215_1768592238205',
+  projectId:'4917215',
+  nomeEmpresa:'BOMAX',
+  webhookUrl:'https://quantize.app.n8n.cloud/webhook/dc624383-20d1-44ab-904e-a7572b30d46e'
 };
 
-// Estado
-let selectedCount = 0;
+let selectedCount=0;
 
-// Inicialização
-document.addEventListener('DOMContentLoaded', async () => {
-  await init();
-});
-
-async function init() {
-  // Verificar se já foi respondido ou expirou
-  const status = await checkApprovalStatus();
-  
-  if (status === 'respondido') {
-    showState('success');
-    return;
-  }
-  
-  if (status === 'expirado') {
-    showState('expired');
-    return;
-  }
-  
-  // Renderizar formulário
-  renderForm();
-  showState('form');
-}
-
-async function checkApprovalStatus() {
-  // Aqui você pode fazer uma chamada para verificar o status
-  // Por enquanto vamos assumir que está "pendente"
-  return 'pendente';
-}
-
-function renderForm() {
-  // Preencher dados do header
-  document.getElementById('empresaNome').textContent = CONFIG.nomeEmpresa;
-  document.getElementById('mesAno').textContent = CONFIG.mesAno;
-  document.getElementById('prazoData').textContent = CONFIG.prazo;
-  
-  // Renderizar temas
-  const container = document.getElementById('temasContainer');
-  CONFIG.temas.forEach((tema, index) => {
-    const card = createTemaCard(tema, index);
-    container.appendChild(card);
-  });
-  
-  // Event listener do form
-  document.getElementById('formTemas').addEventListener('submit', handleSubmit);
-}
-
-function createTemaCard(tema, index) {
-  const card = document.createElement('div');
-  card.className = 'tema-card';
-  card.onclick = () => toggleCheckbox(index);
-  
-  const keywords = tema.keywords_relacionadas
-    .map(kw => `<span class="keyword-tag">${kw}</span>`)
-    .join('');
-  
-  card.innerHTML = `
-    <div class="tema-checkbox">
-      <input type="checkbox" 
-             id="tema_${index}" 
-             name="temas_selecionados" 
-             value="${tema.tema_id}"
-             onclick="event.stopPropagation();"
-             onchange="updateCounter()">
-      <div class="tema-content">
-        <div class="tema-titulo">${tema.titulo}</div>
-        <div class="tema-descricao">${tema.descricao}</div>
-        <div class="keywords">${keywords}</div>
-      </div>
-    </div>
-  `;
-  
-  return card;
-}
-
-function toggleCheckbox(index) {
-  const checkbox = document.getElementById(`tema_${index}`);
-  checkbox.checked = !checkbox.checked;
+function toggleCard(idx){
+  const cb=document.getElementById('tema_'+idx);
+  cb.checked=!cb.checked;
   updateCounter();
 }
 
-function updateCounter() {
-  const checkboxes = document.querySelectorAll('input[name="temas_selecionados"]:checked');
-  selectedCount = checkboxes.length;
+function updateCounter(){
+  const cbs=document.querySelectorAll('input[name="temas_selecionados"]:checked');
+  selectedCount=cbs.length;
   
-  const contador = document.getElementById('contador');
-  const btn = document.getElementById('btnSubmit');
+  const contador=document.getElementById('contador');
+  const btn=document.getElementById('btnSubmit');
   
-  contador.textContent = `${selectedCount} de 4 temas selecionados`;
+  contador.textContent=selectedCount+' de 4 temas selecionados';
+  contador.className='counter';
   
-  // Atualizar estilo do contador
-  contador.className = 'counter';
-  if (selectedCount === 4) {
+  if(selectedCount===4){
     contador.classList.add('success');
-    btn.disabled = false;
-  } else if (selectedCount > 4) {
+    btn.disabled=false;
+  }else if(selectedCount>4){
     contador.classList.add('error');
-    btn.disabled = true;
-  } else {
-    btn.disabled = true;
+    btn.disabled=true;
+  }else{
+    btn.disabled=true;
   }
   
-  // Atualizar visual dos cards
-  document.querySelectorAll('.tema-card').forEach((card, index) => {
-    const checkbox = document.getElementById(`tema_${index}`);
-    if (checkbox.checked) {
-      card.classList.add('selected');
-    } else {
-      card.classList.remove('selected');
-    }
+  document.querySelectorAll('.tema-card').forEach((card,i)=>{
+    const cb=document.getElementById('tema_'+i);
+    card.classList.toggle('selected',cb.checked);
   });
 }
 
-async function handleSubmit(e) {
+document.getElementById('formTemas').addEventListener('submit',async function(e){
   e.preventDefault();
   
-  if (selectedCount !== 4) {
+  if(selectedCount!==4){
     alert('Por favor, selecione exatamente 4 temas!');
     return;
   }
   
   showState('loading');
   
-  // Coletar IDs dos temas selecionados
-  const checkboxes = document.querySelectorAll('input[name="temas_selecionados"]:checked');
-  const temasIds = Array.from(checkboxes).map(cb => cb.value);
+  const cbs=document.querySelectorAll('input[name="temas_selecionados"]:checked');
+  const temasIds=Array.from(cbs).map(cb=>cb.value);
   
-  const payload = {
-    approval_id: CONFIG.approvalId,
-    project_id: CONFIG.projectId,
-    nome_empresa: CONFIG.nomeEmpresa,
-    temas_selecionados: temasIds
+  const payload={
+    approval_id:CONFIG.approvalId,
+    project_id:CONFIG.projectId,
+    nome_empresa:CONFIG.nomeEmpresa,
+    temas_selecionados:temasIds
   };
   
-  try {
-    const response = await fetch(CONFIG.webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+  try{
+    const resp=await fetch(CONFIG.webhookUrl,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
     });
     
-    if (response.ok) {
+    if(resp.ok){
       showState('success');
-    } else {
+    }else{
       throw new Error('Erro ao enviar');
     }
-  } catch (error) {
-    console.error('Erro:', error);
-    document.getElementById('errorMessage').textContent = 
-      'Não foi possível enviar sua resposta. Verifique sua conexão e tente novamente.';
+  }catch(err){
+    console.error('Erro:',err);
+    document.getElementById('errorMessage').textContent='Não foi possível enviar. Tente novamente.';
     showState('error');
   }
-}
+});
 
-function showState(state) {
-  const states = ['loading', 'form', 'success', 'error', 'expired'];
-  states.forEach(s => {
-    const el = document.getElementById(`${s}State`);
-    if (el) el.style.display = s === state ? 'block' : 'none';
+function showState(state){
+  const states=['loading','form','success','error'];
+  states.forEach(s=>{
+    const el=document.getElementById(s+'State');
+    if(el)el.style.display=s===state?'block':'none';
   });
 }
 </script>
-
 </body>
 </html>
