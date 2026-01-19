@@ -171,8 +171,8 @@ h1{color:#1e293b;font-size:28px;margin-bottom:8px}
   <!-- JÁ RESPONDIDO -->
   <div class="success-message" id="successState">
     <div class="success-icon">✅</div>
-    <h2 style="color:#10b981;margin-bottom:12px">Formulário Já Respondido</h2>
-    <p style="color:#64748b">Você já selecionou seus temas anteriormente. Aguarde a produção do conteúdo!</p>
+    <h2 style="color:#10b981;margin-bottom:12px">Temas Confirmados!</h2>
+    <p style="color:#64748b">Seus temas foram registrados com sucesso. Em breve começaremos a produção do conteúdo!</p>
   </div>
 
   <!-- ERRO -->
@@ -192,17 +192,16 @@ h1{color:#1e293b;font-size:28px;margin-bottom:8px}
 
 <script>
 const CONFIG={
-  approvalId:'4917215_1768833786939',
-  token:'7cbfd1e98e3c39a4c265fa328de3be86',
+  approvalId:'4917215_1768851559108',
+  token:'36a593edde2e8c0621d35e69b16490a8',
   projectId:'4917215',
   nomeEmpresa:'BOMAX',
-  webhookUrl:'https://quantize.app.n8n.cloud/webhook/dc624383-20d1-44ab-904e-a7572b30d46e',
-  statusCheckUrl:'https://quantize.app.n8n.cloud/webhook/check-approval-status'
+  webhookUrl:'https://n8n-webhook.srv.superix.dev/webhook/dc624383-20d1-44ab-904e-a7572b30d46e'
 };
 
 let selectedCount=0;
 
-// 🔐 VALIDAÇÃO INICIAL
+// 🔐 VALIDAÇÃO INICIAL SIMPLIFICADA
 document.addEventListener('DOMContentLoaded',async()=>{
   const urlParams=new URLSearchParams(window.location.search);
   const urlToken=urlParams.get('token');
@@ -215,29 +214,8 @@ document.addEventListener('DOMContentLoaded',async()=>{
     return;
   }
   
-  // Validar status no backend
-  try{
-    const resp=await fetch(CONFIG.statusCheckUrl+'?token='+urlToken+'&approval='+urlApproval);
-    const data=await resp.json();
-    
-    if(data.status==='respondido'){
-      showState('success');
-      return;
-    }
-    
-    if(data.status==='expirado'){
-      showState('expired');
-      return;
-    }
-    
-    // Tudo OK, mostra formulário
-    showState('form');
-    
-  }catch(err){
-    console.error('Erro validação:',err);
-    showState('error');
-    document.getElementById('errorMessage').textContent='Erro ao validar acesso. Tente novamente.';
-  }
+  // Token válido, mostra formulário
+  showState('form');
 });
 
 function toggleCard(idx){
@@ -301,16 +279,27 @@ document.getElementById('formTemas').addEventListener('submit',async function(e)
       body:JSON.stringify(payload)
     });
     
+    const data=await resp.json();
+    
     if(resp.ok){
       showState('success');
       document.querySelector('#successState h2').textContent='Temas Confirmados!';
       document.querySelector('#successState p').textContent='Seus temas foram registrados com sucesso. Em breve começaremos a produção do conteúdo.';
     }else{
-      throw new Error('Erro ao enviar');
+      // Tratamento de erros específicos
+      if(data.status===409){
+        showState('success');
+        document.querySelector('#successState h2').textContent='Formulário Já Respondido';
+        document.querySelector('#successState p').textContent='Você já selecionou seus temas anteriormente. Aguarde a produção do conteúdo!';
+      }else if(data.status===410){
+        showState('expired');
+      }else{
+        throw new Error(data.message||'Erro ao enviar');
+      }
     }
   }catch(err){
     console.error('Erro:',err);
-    document.getElementById('errorMessage').textContent='Não foi possível enviar. Tente novamente.';
+    document.getElementById('errorMessage').textContent=err.message||'Não foi possível enviar. Tente novamente.';
     showState('error');
   }
 });
