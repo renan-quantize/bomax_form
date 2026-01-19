@@ -36,20 +36,22 @@ h1{color:#1e293b;font-size:28px;margin-bottom:8px}
 .loading{display:none;text-align:center;padding:40px}
 .spinner{border:4px solid #f3f4f6;border-top:4px solid #3b82f6;border-radius:50%;width:40px;height:40px;animation:spin 1s linear infinite;margin:0 auto 16px}
 @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-.success-message,.error-message{display:none;text-align:center;padding:40px}
-.success-icon,.error-icon{font-size:64px;margin-bottom:16px}
+.success-message,.error-message,.expired-message{display:none;text-align:center;padding:40px}
+.success-icon,.error-icon,.expired-icon{font-size:64px;margin-bottom:16px}
 @media (max-width:640px){.container{padding:24px}h1{font-size:24px}.tema-card{padding:16px}}
 </style>
 </head>
 <body>
 
 <div class="container">
-  <div class="loading" id="loadingState">
+  <!-- LOADING INICIAL -->
+  <div class="loading" id="loadingState" style="display:block">
     <div class="spinner"></div>
-    <p style="color:#64748b">Carregando seus temas...</p>
+    <p style="color:#64748b">Validando acesso...</p>
   </div>
 
-  <div id="formState" style="display:block">
+  <!-- FORMULÁRIO -->
+  <div id="formState" style="display:none">
     <div class="header">
       <div class="logo">📝</div>
       <h1>Selecione os Temas do Blog</h1>
@@ -61,7 +63,7 @@ h1{color:#1e293b;font-size:28px;margin-bottom:8px}
       <ul>
         <li>Selecione <strong>exatamente 4 temas</strong> que mais se alinham com sua estratégia</li>
         <li>Esses temas serão desenvolvidos nos próximos 2 meses</li>
-        <li>Você tem até <strong>21/01/2026</strong> para responder</li>
+        <li>Você tem até <strong>24/01/2026</strong> para responder</li>
       </ul>
     </div>
 
@@ -166,28 +168,77 @@ h1{color:#1e293b;font-size:28px;margin-bottom:8px}
     </div>
   </div>
 
+  <!-- JÁ RESPONDIDO -->
   <div class="success-message" id="successState">
     <div class="success-icon">✅</div>
-    <h2 style="color:#10b981;margin-bottom:12px">Temas Confirmados!</h2>
-    <p style="color:#64748b">Seus temas foram registrados com sucesso. Em breve começaremos a produção do conteúdo.</p>
+    <h2 style="color:#10b981;margin-bottom:12px">Formulário Já Respondido</h2>
+    <p style="color:#64748b">Você já selecionou seus temas anteriormente. Aguarde a produção do conteúdo!</p>
   </div>
 
+  <!-- ERRO -->
   <div class="error-message" id="errorState">
     <div class="error-icon">❌</div>
-    <h2 style="color:#ef4444;margin-bottom:12px">Erro ao Enviar</h2>
-    <p style="color:#64748b" id="errorMessage">Ocorreu um erro. Tente novamente.</p>
+    <h2 style="color:#ef4444;margin-bottom:12px">Acesso Negado</h2>
+    <p style="color:#64748b" id="errorMessage">Link inválido ou expirado. Entre em contato conosco.</p>
+  </div>
+
+  <!-- EXPIRADO -->
+  <div class="expired-message" id="expiredState">
+    <div class="expired-icon">⏰</div>
+    <h2 style="color:#f59e0b;margin-bottom:12px">Prazo Expirado</h2>
+    <p style="color:#64748b">O prazo para seleção de temas expirou. Nossa equipe escolherá os temas automaticamente.</p>
   </div>
 </div>
 
 <script>
 const CONFIG={
-  approvalId:'4917215_1768592818384',
+  approvalId:'4917215_1768832960786',
+  token:'c0fa95c039f336c40210643ac2dbb8b4',
   projectId:'4917215',
   nomeEmpresa:'BOMAX',
-  webhookUrl:'https://quantize.app.n8n.cloud/webhook/dc624383-20d1-44ab-904e-a7572b30d46e'
+  webhookUrl:'https://quantize.app.n8n.cloud/webhook/dc624383-20d1-44ab-904e-a7572b30d46e',
+  statusCheckUrl:'https://quantize.app.n8n.cloud/webhook/check-approval-status'
 };
 
 let selectedCount=0;
+
+// 🔐 VALIDAÇÃO INICIAL
+document.addEventListener('DOMContentLoaded',async()=>{
+  const urlParams=new URLSearchParams(window.location.search);
+  const urlToken=urlParams.get('token');
+  const urlApproval=urlParams.get('approval');
+  
+  // Validar token da URL
+  if(!urlToken||urlToken!==CONFIG.token||urlApproval!==CONFIG.approvalId){
+    showState('error');
+    document.getElementById('errorMessage').textContent='Link inválido. Verifique o email e use o link correto.';
+    return;
+  }
+  
+  // Validar status no backend
+  try{
+    const resp=await fetch(CONFIG.statusCheckUrl+'?token='+urlToken+'&approval='+urlApproval);
+    const data=await resp.json();
+    
+    if(data.status==='respondido'){
+      showState('success');
+      return;
+    }
+    
+    if(data.status==='expirado'){
+      showState('expired');
+      return;
+    }
+    
+    // Tudo OK, mostra formulário
+    showState('form');
+    
+  }catch(err){
+    console.error('Erro validação:',err);
+    showState('error');
+    document.getElementById('errorMessage').textContent='Erro ao validar acesso. Tente novamente.';
+  }
+});
 
 function toggleCard(idx){
   const cb=document.getElementById('tema_'+idx);
@@ -230,11 +281,13 @@ document.getElementById('formTemas').addEventListener('submit',async function(e)
   }
   
   showState('loading');
+  document.querySelector('#loadingState p').textContent='Salvando sua seleção...';
   
   const cbs=document.querySelectorAll('input[name="temas_selecionados"]:checked');
   const temasIds=Array.from(cbs).map(cb=>cb.value);
   
   const payload={
+    token:CONFIG.token,
     approval_id:CONFIG.approvalId,
     project_id:CONFIG.projectId,
     nome_empresa:CONFIG.nomeEmpresa,
@@ -250,6 +303,8 @@ document.getElementById('formTemas').addEventListener('submit',async function(e)
     
     if(resp.ok){
       showState('success');
+      document.querySelector('#successState h2').textContent='Temas Confirmados!';
+      document.querySelector('#successState p').textContent='Seus temas foram registrados com sucesso. Em breve começaremos a produção do conteúdo.';
     }else{
       throw new Error('Erro ao enviar');
     }
@@ -261,7 +316,7 @@ document.getElementById('formTemas').addEventListener('submit',async function(e)
 });
 
 function showState(state){
-  const states=['loading','form','success','error'];
+  const states=['loading','form','success','error','expired'];
   states.forEach(s=>{
     const el=document.getElementById(s+'State');
     if(el)el.style.display=s===state?'block':'none';
